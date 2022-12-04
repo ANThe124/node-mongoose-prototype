@@ -4,7 +4,7 @@ A simple NodeJS CRUD app that can be used to quickly test MongoDB deployments us
 ## Easy to Use
 1. Install dependencies:
 ```javascript
-npn install -y
+npm install -y
 ```
 2. Create a '.env' file to add your Database and PORT variables:
 ```javascript
