@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('partials/head'); %>
+</head>
+
+<body class="container">
+
+  <header>
+    <%- include('partials/header'); %>
+  </header>
+
+  <main>
+    <div class="jumbotron" style="background-image: 
+                url(https://res.cloudinary.com/wilderness-travel/image/upload/c_scale,dpr_3.0,w_500/f_auto,q_auto/v1/trips/africa/namibia/ultimate-namibia-and-botswana/1-slide-namibia-botswana-zebra-antelope-giraffe-pano);
+                background-size: cover;
+                background-size: 100%;">
+    </div>
+
+    <a class="btn btn-outline-secondary btn-lg btn-block" href="/destinations/new" style="margin-bottom: 2rem">Add a New
+      Destination</a>
+
+    <div class="row">
+
+      <!-- Blog Entries -->
+      <div class="col-lg-6">
+        <!-- Featured Blog Post-->
+        <div class="card mb-4">
+          <a href="https://mashatu.com/mashatu-euphorbia-villas/" target="_blank"> <img class="card-img-top"
+              src="https://africanhorsesafaris.com/wp-content/uploads/2019/09/makgadikgadi3-600x403.jpg"> </a>
+          <div class="card-body">
+            <h2 class="card-title h4">Mashatu Game Reserve</h2>
+            <p class="card-text">Explore horse-back safaris, cycling safaris and walks in the wild.</p>
+            <a class="btn btn-primary" href="https://mashatu.com/mashatu-euphorbia-villas/" target="_blank">Read more
+              →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <!-- Featured Blog Post-->
+        <div class="card mb-4">
+          <a href="https://www.andbeyond.com/destinations/africa/botswana/makgadikgadi-pans/" target="_blank"> <img
+              class="card-img-top" src="https://wildlandsafaris.com/wp-content/uploads/2017/07/camp-on-pans3.jpg"> </a>
+          <div class="card-body">
+            <h2 class="card-title h4">Makgadikgadi Pans</h2>
+            <p class="card-text">The largest salt pans in the world, spanning over 16,000 km²</p>
+            <a class="btn btn-primary" href="https://www.andbeyond.com/destinations/africa/botswana/makgadikgadi-pans/"
+              target="_blank">Read more →</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <% destinations.forEach(function(destination){ %>
+
+      <div class="row">
+
+        <div class="col-lg-6">
+
+          <!-- Small Blog post-->
+
+          <a href="<%= destination.link %>" target="_blank"> <img class="card-img-top" src="<%=destination.image%>">
+          </a>
+          <div class="card-body">
+            <h2 class="card-title h4">
+              <%= destination.name %>
+            </h2>
+            <p class="card-text">
+              <%= destination.description %>
+            </p>
+            <a class="btn btn-primary" href="<%= destination.link %>" target="_blank">Read more →</a>
+          </div>
+
+        </div>
+
+      </div>
+
+      </div>
+      <% }); %>
+
+
+        <a href="/">Return To Homepage </a>
+  </main>
+
+  <footer>
+    <%- include('partials/footer'); %>
+  </footer>
+
+</body>
+
+</html>

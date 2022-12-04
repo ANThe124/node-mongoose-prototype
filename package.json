@@ -1,0 +1,17 @@
+{
+  "name": "node-mongoose-prototype",
+  "version": "1.0",
+  "description": "A simple NodeJS CRUD app that can be used to quickly test MongoDB deployments using Mongoose and Express.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "mkmotsumi",
+  "license": "MIT",
+  "dependencies": {
+    "ejs": "^3.1.8",
+    "express": "^4.18.2",
+    "mongoose": "^6.7.4",
+    "dotenv": "^16.0.3"
+  }
+}
