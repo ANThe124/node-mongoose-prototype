@@ -12,6 +12,7 @@ npm install -y
 DB_USERNAME=
 DB_PASSWORD=
 PORT=
+DB_HOST=
 ```
 3. Run the app:
 ```javascript
