@@ -10,7 +10,7 @@ let db_username = process.env.DB_USERNAME;
 let db_password = process.env.DB_PASSWORD;
 let db_host = process.env.DB_HOST;
 
-//Connect to MongoDB using Mongoose
+//Connect to MongoDB using Mongoose connnection string
 mongoose.connect(`mongodb://${db_username}:${db_password}@${db_host}:${port}`, { 
     useNewUrlParser: true, 
     useUnifiedTopology: true 
