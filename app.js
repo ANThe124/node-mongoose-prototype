@@ -11,7 +11,10 @@ let db_password = process.env.DB_PASSWORD;
 let db_host = process.env.DB_HOST;
 
 //Connect to MongoDB using Mongoose
-mongoose.connect(`mongodb://${db_username}:${db_password}@${db_host}:${port}`, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(`mongodb://${db_username}:${db_password}@${db_host}:${port}`, { 
+    useNewUrlParser: true, 
+    useUnifiedTopology: true 
+});
 
 //Setup a schema for the destination objects
 const destinationSchema = new mongoose.Schema({
