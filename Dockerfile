@@ -1,6 +1,6 @@
-FROM node:12
+FROM node:lts-alpine
 
-# Create app directory
+# Create app directory inside docker image
 WORKDIR /usr/src/app
 
 # Install app dependencies
@@ -9,10 +9,13 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 RUN npm install
+# If you are building your code for production
+# RUN npm ci --only=production
 
 # Bundle app source
 COPY . .
 
+# 
 EXPOSE 3000
 
-CMD [ "npm", "start" ]
+CMD [ "start" ]
