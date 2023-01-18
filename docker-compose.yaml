@@ -3,11 +3,12 @@
 version: '3.5'
 
 services:
-  node-mongoose-prototype-container:
+  node-mongoose-prototype:
     image: mkivo/node-mongoose-prototype:latest
+    container_name: node-mongoose-prototype-container
     restart: always
     networks:
-      - app-network
+      - mongo-network
     ports:
       - 3000:3000
     environment:
@@ -19,5 +20,5 @@ services:
       DB_HOST: ${DB_HOST}
 
 networks:
-  app-network:
+  mongo-network:
     driver: bridge
