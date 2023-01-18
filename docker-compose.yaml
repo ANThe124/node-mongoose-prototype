@@ -4,7 +4,7 @@ version: '3.5'
 
 services:
   node-mongoose-prototype:
-    image: mkivo/node-mongoose-prototype:latest
+    image: mkivo/node-mongoose-prototype:alpine
     container_name: node-mongoose-prototype-container
     restart: always
     networks:
