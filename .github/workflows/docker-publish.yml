@@ -10,7 +10,7 @@ on:
 env:
   REGISTRY: docker.io
   IMAGE_NAME: mkivo/node-mongoose-prototype
-  IMAGE_TAG: 1.0.${{ github.run_number }}
+  IMAGE_TAG: latest   # v1.0.${{ github.run_number }} for production versioning
 
 jobs:
 
