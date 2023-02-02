@@ -80,16 +80,16 @@ jobs:
         # against the sigstore community Fulcio instance.
         run: echo "${{ steps.meta.outputs.tags }}" | xargs -I {} cosign sign {}@${{ steps.build-and-push.outputs.digest }}
 
-
-  EC2-Deploy:
-    uses: wshihadeh/docker-deployment-action@v1
-    with:
-      remote_docker_host: ${{ secrets.REMOTE_DOCKER_HOST }}
-      ssh_private_key: ${{ secrets.DOCKER_SSH_PRIVATE_KEY }}
-      ssh_public_key: ${{ secrets.DOCKER_SSH_PUBLIC_KEY }}
-      deployment_mode: docker-compose
-      args: up -d
-      pre_deployment_command_args: 'bundle exec rake db:migrate'
-      docker_prune: 'true'
-      pull_images_first: 'true'
+# Deploy to EC2
+      - name: EC2-Deploy
+        uses: wshihadeh/docker-deployment-action@v1
+        with:
+          remote_docker_host: ${{ secrets.REMOTE_DOCKER_HOST }}
+          ssh_private_key: ${{ secrets.DOCKER_SSH_PRIVATE_KEY }}
+          ssh_public_key: ${{ secrets.DOCKER_SSH_PUBLIC_KEY }}
+          deployment_mode: docker-compose
+          args: up -d
+          pre_deployment_command_args: 'bundle exec rake db:migrate'
+          docker_prune: 'true'
+          pull_images_first: 'true'
       
