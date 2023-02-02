@@ -82,12 +82,14 @@ jobs:
 
 
   EC2-Deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - id: deploy
-        uses: bitovi/github-actions-deploy-docker-to-ec2@v0.4.1
-        with:
-          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws_default_region: us-east-2a
-          dot_env: ${{ secrets.DOT_ENV }}
+    uses: wshihadeh/docker-deployment-action@v1
+    with:
+      remote_docker_host: ${{ secrets.REMOTE_DOCKER_HOST }}
+      ssh_private_key: ${{ secrets.DOCKER_SSH_PRIVATE_KEY }}
+      ssh_public_key: ${{ secrets.DOCKER_SSH_PUBLIC_KEY }}
+      deployment_mode: docker-compose
+      args: up -d
+      pre_deployment_command_args: 'bundle exec rake db:migrate'
+      docker_prune: 'true'
+      pull_images_first: 'true'
+      
