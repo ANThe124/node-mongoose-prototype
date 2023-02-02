@@ -84,7 +84,7 @@ jobs:
       - name: EC2-Deploy
         uses: wshihadeh/docker-deployment-action@v1
         with:
-          remote_docker_host: ${{ secrets.REMOTE_DOCKER_HOST }}
+          remote_docker_host: ubuntu@ec2-18-118-210-79.us-east-2.compute.amazonaws.com
           ssh_private_key: ${{ secrets.DOCKER_SSH_PRIVATE_KEY }}
           ssh_public_key: ${{ secrets.DOCKER_SSH_PUBLIC_KEY }}
           deployment_mode: docker-compose
