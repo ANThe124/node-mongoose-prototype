@@ -1,7 +1,7 @@
 # These environment credentials are just placeholders
 # Please configure your server credentials with best practices
 
-version: '3.5'
+version: '3.9'
 
 services:
   node-mongoose-prototype:

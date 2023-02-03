@@ -79,17 +79,3 @@ jobs:
         # This step uses the identity token to provision an ephemeral certificate
         # against the sigstore community Fulcio instance.
         run: echo "${{ steps.meta.outputs.tags }}" | xargs -I {} cosign sign {}@${{ steps.build-and-push.outputs.digest }}
-
-# Deploy to EC2
-      - name: EC2-Deploy
-        uses: wshihadeh/docker-deployment-action@v2
-        with:
-          remote_docker_host: ubuntu@ec2-18-118-210-79.us-east-2.compute.amazonaws.com
-          ssh_private_key: ${{ secrets.DOCKER_SSH_PRIVATE_KEY }}
-          ssh_public_key: ${{ secrets.DOCKER_SSH_PUBLIC_KEY }}
-          deployment_mode: docker-compose
-          args: up -d
-          pre_deployment_command_args: 'bundle exec rake db:migrate'
-          docker_prune: 'true'
-          pull_images_first: 'true'
-      
