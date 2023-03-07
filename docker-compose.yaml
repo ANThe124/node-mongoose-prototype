@@ -1,10 +1,6 @@
-# These environment credentials are just placeholders
-# Please configure your server credentials with best practices
-version: '3.5'
-
 services:
   node-mongoose-prototype:
-    image: mkivo/node-mongoose-prototype:alpine
+    image: mkivo/node-mongoose-prototype:latest
     container_name: node-mongoose-prototype-container
     restart: always
     networks:
@@ -12,12 +8,8 @@ services:
     ports:
       - 3000:3000
     environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGODB_ROOT_USERNAME}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_ROOT_PASSWORD}
-      DB_USERNAME: ${DB_USERNAME}
-      DB_PASSWORD: ${DB_PASSWORD}
       PORT: ${PORT}
-      DB_HOST: ${DB_HOST}
+      CONN_STR: ${CONN_STR}
 
 networks:
   mongo-network:
