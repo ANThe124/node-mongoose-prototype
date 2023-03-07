@@ -1,4 +1,6 @@
 .env
-node_modules
+.github
 .DS_Store
+
+node_modules
 npm-debug.log
