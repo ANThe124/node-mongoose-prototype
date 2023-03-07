@@ -12,7 +12,14 @@ let db_host = process.env.CONN_STR;
 mongoose.connect(`${db_host}`, { 
     useNewUrlParser: true, 
     useUnifiedTopology: true 
-});
+})
+.then(() => {
+    console.log("Database Connected!")
+})
+.catch(err => {
+    console.log("Database Error!")
+    console.log(err)
+})
 
 //Setup a schema for the destination objects
 const destinationSchema = new mongoose.Schema({
