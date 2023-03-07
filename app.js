@@ -6,12 +6,10 @@ const mongoose = require("mongoose");
 require('dotenv').config();
 
 let port = process.env.PORT;
-let db_username = process.env.DB_USERNAME;
-let db_password = process.env.DB_PASSWORD;
-let db_host = process.env.DB_HOST;
+let db_host = process.env.CONN_STR;
 
 //Connect to MongoDB using Mongoose connnection string
-mongoose.connect(`mongodb://${db_username}:${db_password}@${db_host}:${port}`, { 
+mongoose.connect(`${db_host}`, { 
     useNewUrlParser: true, 
     useUnifiedTopology: true 
 });
