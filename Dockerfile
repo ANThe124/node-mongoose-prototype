@@ -18,4 +18,4 @@ COPY . /usr/src/app
 # 
 EXPOSE 3000
 
-CMD [ "node", "start" ]
+CMD [ "node", "app.js" ]
