@@ -3,8 +3,7 @@ services:
     image: mkivo/node-mongoose-prototype:latest
     container_name: node-mongoose-prototype-container
     restart: always
-    networks:
-      - mongo-network
+
     ports:
       - 3000:3000
     environment:
@@ -12,6 +11,3 @@ services:
       PORT: ${PORT}
       CONN_STR: ${CONN_STR}
 
-networks:
-  mongo-network:
-    driver: bridge
