@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 
 //Configure & Import environment variables
 require('dotenv').config();
-
+let host = process.env.HOST;
 let port = process.env.PORT;
 let db_host = process.env.CONN_STR;
 
@@ -80,7 +80,7 @@ app.get("/destinations/new", function (req, res) {
 });
 
 //Launch web server and start listening at port 3000
-app.listen(3000, function (err) {
+app.listen(port, host, function (err) {
     if (err) console.log("Error in server setup")
-    console.log("Server listening on Port ", 3000);
+    console.log("Server listening on Port ", port);
 })
