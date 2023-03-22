@@ -1,0 +1,31 @@
+trigger:
+- multi-stage
+
+resources:
+- repo: self
+
+variables:
+  tag: 'multi-stage' #'$(Build.BuildId)'
+
+stages:
+- stage: Build
+  displayName: Build Stage
+  jobs:
+  - job: Build
+    displayName: Build job
+    pool:
+      vmImage: ubuntu-latest
+    steps: 
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'Docker Hub Connection'
+        repository: 'mkivo/node-mongoose-prototype'
+        command: 'buildAndPush'
+        Dockerfile: 'Dockerfile'
+        buildContext: '.'
+        tags: |
+          $(tag)
+
+
+
+  
