@@ -1,11 +1,10 @@
 trigger:
-- $(triggerBranch)
+- multi-stage
 
 resources:
 - repo: self
 
 variables:
-  triggerBranch: multi-stage
   imageRepo: 'mkivo/node-mongoose-prototype'
   tag: '$(Build.BuildId)'
 
