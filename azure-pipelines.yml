@@ -22,11 +22,11 @@ stages:
         containerRegistry: 'Docker Hub Connection'
         repository: $(imageRepo)
         command: 'buildAndPush'
-        Dockerfile: 'Dockerfile'
-        buildContext: '.'
+        Dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
         tags: |
           $(tag)
 
 
-
   
+
+
