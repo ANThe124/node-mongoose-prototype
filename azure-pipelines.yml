@@ -5,6 +5,7 @@ resources:
 - repo: self
 
 variables:
+  imageRepo: 'mkivo/node-mongoose-prototype'
   tag: '$(Build.BuildId)'
 
 stages:
@@ -19,13 +20,15 @@ stages:
     - task: Docker@2
       inputs:
         containerRegistry: 'Docker Hub Connection'
-        repository: 'mkivo/node-mongoose-prototype'
+        repository: $(imageRepo)
         command: 'buildAndPush'
-        Dockerfile: 'Dockerfile'
-        buildContext: '.'
+        Dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
         tags: |
           $(tag)
 
 
 
+
   
+
+
