@@ -6,7 +6,7 @@ resources:
 
 variables:
   imageRepo: 'mkivo/node-mongoose-prototype'
-  tag: 'multi-variables' #'$(Build.BuildId)'
+  tag: '$(Build.BuildId)'
 
 stages:
 - stage: Build
