@@ -1,10 +1,11 @@
 trigger:
-- multi-stage
+- $(triggerBranch)
 
 resources:
 - repo: self
 
 variables:
+  triggerBranch: main
   imageRepo: 'mkivo/node-mongoose-prototype'
   tag: '$(Build.BuildId)'
 
@@ -25,6 +26,14 @@ stages:
         Dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
         tags: |
           $(tag)
+
+# - stage: Deploy
+#   displayName: Deploy to Kubernetes
+#   pool:
+#     vmImage: ubuntu-latest
+#   steps:
+
+
 
 
   
