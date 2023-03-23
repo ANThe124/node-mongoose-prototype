@@ -5,7 +5,7 @@ resources:
 - repo: self
 
 variables:
-  triggerBranch: main
+  triggerBranch: multi-stage
   imageRepo: 'mkivo/node-mongoose-prototype'
   tag: '$(Build.BuildId)'
 
