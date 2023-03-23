@@ -27,12 +27,6 @@ stages:
         tags: |
           $(tag)
 
-# - stage: Deploy
-#   displayName: Deploy to Kubernetes
-#   pool:
-#     vmImage: ubuntu-latest
-#   steps:
-
 
 
 
