@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-mongoose-prototype
+  labels:
+    app: node-mongoose-prototype
+    component: back
+spec:
+  replicas: 2
+  selector: 
+    matchLabels:
+      component: back
+  template:
+    metadata: 
+      labels:
+        app: node-mongoose-prototype
+        component: back
+    spec:
+      containers:
+        - name: node-mongoose-prototype-webapp
+          image: mkivo/node-mongoose-prototype:25
+          resources:
+            limits:
+              memory: "500Mi"
+              cpu: "800m"
+            requests:
+              memory: "500Mi"
+              cpu: "400m"
+          ports: 
+            - containerPort: 3000
+          env: 
+            - name: PORT
+              value: "3000"
+            - name: CONN_STR
+              value: "mongodb+srv://mernk8s:mernk8s@cluster0.ewx6rez.mongodb.net"
