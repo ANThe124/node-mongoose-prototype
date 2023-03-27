@@ -35,7 +35,7 @@ stages:
     - task: CopyFiles@2
       inputs:
         Contents: 'env.txt'
-        TargetFolder: '$(Build.SourcesDirectory)'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
     - task: PublishBuildArtifacts@1
       displayName: Publish env variables
