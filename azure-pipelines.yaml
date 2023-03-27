@@ -1,12 +1,12 @@
 trigger:
-- multi-stage
+- refactor
 
 resources:
 - repo: self
 
 variables:
   imageRepo: 'mkivo/node-mongoose-prototype'
-  tag: '$(Build.BuildId)'
+  tag: refactor #'$(Build.BuildId)'
 
 stages:
 - stage: Build
