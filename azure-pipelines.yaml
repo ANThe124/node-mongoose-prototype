@@ -29,12 +29,12 @@ stages:
       inputs:
         script: |
           echo $(CONN-STR)
-          echo $(CONN-STR) > .env
-          cat .env
+          echo $(CONN-STR) > env.txt
+          cat env.txt
 
     - task: CopyFiles@2
       inputs:
-        Contents: '.env'
+        Contents: 'env.txt'
         TargetFolder: '$(Build.SourcesDirectory)'
 
     - task: PublishBuildArtifacts@1
