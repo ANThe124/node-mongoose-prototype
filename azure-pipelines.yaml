@@ -17,33 +17,6 @@ stages:
     pool:
       vmImage: ubuntu-latest
     steps: 
-    - task: AzureKeyVault@2
-      inputs:
-        azureSubscription: 'Deployments Service Connection'
-        KeyVaultName: 'nmp-pipeline-keys'
-        SecretsFilter: '*'
-        RunAsPreJob: true
-
-    - task: CmdLine@2
-      displayName: Write to file
-      inputs:
-        script: |
-          echo $(CONN-STR)
-          echo $(CONN-STR) > env.txt
-          cat env.txt
-
-    - task: CopyFiles@2
-      inputs:
-        Contents: 'env.txt'
-        TargetFolder: '$(Build.ArtifactStagingDirectory)'
-
-    - task: PublishBuildArtifacts@1
-      displayName: Publish env variables
-      inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-        ArtifactName: 'drop'
-        publishLocation: 'Container'
-
     - task: Docker@2
       inputs:
         containerRegistry: 'Docker Hub Connection'
