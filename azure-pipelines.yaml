@@ -18,7 +18,7 @@ stages:
     pool:
       vmImage: ubuntu-latest
     steps: 
-    - script: echo $(PORT)
+    - script: echo $(nmp-variable-group.PORT)
    
     # - task: Docker@2
     #   inputs:
