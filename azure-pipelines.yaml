@@ -18,7 +18,7 @@ stages:
     pool:
       vmImage: ubuntu-latest
     steps: 
-    - script: echo $(DB-CONN)
+    - script: echo $(DB-STR)
     - task: Docker@2
       inputs:
         containerRegistry: 'Docker Hub Connection'
