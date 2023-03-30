@@ -26,7 +26,8 @@ stages:
         RunAsPreJob: false
         
     - bash: |
-        echo $(PORT) 
+        echo $(PORT)
+        echo $(DB-STR)
     # - task: Docker@2
     #   inputs:
     #     containerRegistry: 'Docker Hub Connection'
