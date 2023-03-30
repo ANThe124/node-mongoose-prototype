@@ -18,45 +18,52 @@ stages:
     pool:
       vmImage: ubuntu-latest
     steps: 
+    - task: AzureKeyVault@2
+      inputs:
+        azureSubscription: 'Deployments Service Connection'
+        KeyVaultName: 'nmp-pipeline-keys'
+        SecretsFilter: '*'
+        RunAsPreJob: false
+        
     - bash: |
         echo $(PORT) 
-    - task: Docker@2
-      inputs:
-        containerRegistry: 'Docker Hub Connection'
-        repository: $(imageRepo)
-        command: 'buildAndPush'
-        Dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
-        tags: |
-          $(tag)
-    - task: PublishBuildArtifacts@1
-      inputs:
-        PathtoPublish: '$(Build.SourcesDirectory)/kubernetes'
-        ArtifactName: 'manifests'
-        publishLocation: 'Container'
+    # - task: Docker@2
+    #   inputs:
+    #     containerRegistry: 'Docker Hub Connection'
+    #     repository: $(imageRepo)
+    #     command: 'buildAndPush'
+    #     Dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
+    #     tags: |
+    #       $(tag)
+    # - task: PublishBuildArtifacts@1
+    #   inputs:
+    #     PathtoPublish: '$(Build.SourcesDirectory)/kubernetes'
+    #     ArtifactName: 'manifests'
+    #     publishLocation: 'Container'
     
 
-- stage: Deploy
-  displayName: Deploy to Dev
-  dependsOn: Build
-  jobs:
-    - job: Deploy
-      displayName: Deploy to AKS
-      pool: 
-        vmImage: ubuntu-latest
-      steps:
-      - task: DownloadPipelineArtifact@2
-        inputs:
-          buildType: 'current'
-          artifactName: 'manifests'
-          targetPath: '$(Pipeline.Workspace)/manifests'
-      - task: KubernetesManifest@0
-        inputs:
-          action: 'deploy'
-          kubernetesServiceConnection: 'staging-nmp-nmp-cluster-default-1679573575997'
-          namespace: 'default'
-          manifests: |
-            $(Pipeline.Workspace)/manifests/deployment.yaml'
-            $(Pipeline.Workspace)/manifests/service.yaml'
+# - stage: Deploy
+#   displayName: Deploy to Dev
+#   dependsOn: Build
+#   jobs:
+#     - job: Deploy
+#       displayName: Deploy to AKS
+#       pool: 
+#         vmImage: ubuntu-latest
+#       steps:
+#       - task: DownloadPipelineArtifact@2
+#         inputs:
+#           buildType: 'current'
+#           artifactName: 'manifests'
+#           targetPath: '$(Pipeline.Workspace)/manifests'
+#       - task: KubernetesManifest@0
+#         inputs:
+#           action: 'deploy'
+#           kubernetesServiceConnection: 'staging-nmp-nmp-cluster-default-1679573575997'
+#           namespace: 'default'
+#           manifests: |
+#             $(Pipeline.Workspace)/manifests/deployment.yaml'
+#             $(Pipeline.Workspace)/manifests/service.yaml'
 
 
 
