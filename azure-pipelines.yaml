@@ -18,8 +18,14 @@ stages:
     pool:
       vmImage: ubuntu-latest
     steps: 
-    - script: echo $(nmp-variable-group.PORT)
-   
+    - task: AzureKeyVault@2
+      inputs:
+        azureSubscription: 'Deployments Service Connection'
+        KeyVaultName: 'nmp-pipeline-keys'
+        SecretsFilter: '*'
+        RunAsPreJob: true
+
+    - script: echo $(PORT)
     # - task: Docker@2
     #   inputs:
     #     containerRegistry: 'Docker Hub Connection'
