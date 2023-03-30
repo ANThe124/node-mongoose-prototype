@@ -32,4 +32,4 @@ spec:
             - name: PORT
               value: "3000"
             - name: CONN_STR
-              value: "mongodb+srv://mernk8s:mernk8s@cluster0.ewx6rez.mongodb.net"
+              value: ${DB-STR}
