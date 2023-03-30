@@ -1,5 +1,5 @@
 trigger:
-- refactor
+- none
 
 resources:
 - repo: self
@@ -25,6 +25,35 @@ stages:
         Dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
         tags: |
           $(tag)
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.SourcesDirectory)/kubernetes'
+        ArtifactName: 'manifests'
+        publishLocation: 'Container'
+    
+
+- stage: Deploy
+  displayName: Deploy to Dev
+  dependsOn: Build
+  jobs:
+    - job: Deploy
+      displayName: Deploy to AKS
+      pool: 
+        vmImage: ubuntu-latest
+      steps:
+      - task: DownloadPipelineArtifact@2
+        inputs:
+          buildType: 'current'
+          artifactName: 'manifests'
+          targetPath: '$(Pipeline.Workspace)/manifests'
+      - task: KubernetesManifest@0
+        inputs:
+          action: 'deploy'
+          kubernetesServiceConnection: 'staging-nmp-nmp-cluster-default-1679573575997'
+          namespace: 'default'
+          manifests: |
+            $(Pipeline.Workspace)/manifests/deployment.yaml'
+            $(Pipeline.Workspace)/manifests/service.yaml'
 
 
 
