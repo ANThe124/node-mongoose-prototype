@@ -1,5 +1,5 @@
 trigger:
-- refactor
+- none
 
 resources:
 - repo: self
@@ -46,6 +46,15 @@ stages:
           buildType: 'current'
           artifactName: 'manifests'
           targetPath: '$(Pipeline.Workspace)/manifests'
+      - task: KubernetesManifest@0
+        inputs:
+          action: 'deploy'
+          kubernetesServiceConnection: 'staging-nmp-nmp-cluster-default-1679573575997'
+          namespace: 'default'
+          manifests: |
+            $(Pipeline.Workspace)/manifests/deployment.yaml'
+            $(Pipeline.Workspace)/manifests/service.yaml'
+
 
 
 
