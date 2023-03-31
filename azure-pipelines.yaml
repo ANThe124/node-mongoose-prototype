@@ -62,10 +62,11 @@ stages:
           buildType: 'current'
           artifactName: 'manifests'
           targetPath: '$(Pipeline.Workspace)/manifests'
-      - script: 
-        env:
-          PORT: $(PORT)
-          CONN_STR: $(DB-STR)
+      - script: ls -l /home/vsts/work/1/manifests
+
+        # env:
+        #   PORT: $(PORT)
+        #   CONN_STR: $(DB-STR)
       
       - task: KubernetesManifest@0
         inputs:
