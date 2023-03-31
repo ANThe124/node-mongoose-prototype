@@ -31,7 +31,8 @@ stages:
       inputs:
         PathtoPublish: '$(Build.SourcesDirectory)/kubernetes'
         ArtifactName: 'manifests'
-        publishLocation: 'Container'
+        publishLocation: 'pipeline'
+
     - task: AzureKeyVault@2
       displayName: Unlock Key Vault
       inputs:
