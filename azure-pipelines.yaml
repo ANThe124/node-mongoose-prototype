@@ -26,11 +26,18 @@ stages:
         Dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
         tags: |
           $(tag)
-    - task: PublishBuildArtifacts@1
-      displayName: Publish Kubernetes Manifests
+          
+    # - task: PublishBuildArtifacts@1
+    #   displayName: Publish Kubernetes Manifests
+    #   inputs:
+    #     PathtoPublish: '$(Build.SourcesDirectory)/kubernetes'
+    #     ArtifactName: 'manifests'
+    #     publishLocation: 'pipeline'
+
+    - task: PublishPipelineArtifact@1
       inputs:
-        PathtoPublish: '$(Build.SourcesDirectory)/kubernetes'
-        ArtifactName: 'manifests'
+        targetPath: '$(Build.SourcesDirectory)/kubernetes'
+        artifact: 'manifests'
         publishLocation: 'pipeline'
 
     - task: AzureKeyVault@2
