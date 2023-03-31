@@ -1,5 +1,5 @@
 trigger:
-- refactor
+- none
 
 resources:
 - repo: self
