@@ -7,7 +7,7 @@ resources:
 variables:
   imageRepo: 'mkivo/node-mongoose-prototype'
   tag: refactor #'$(Build.BuildId)'
-  group: nmp-variable-group
+  
 
 stages:
 - stage: Build
@@ -18,51 +18,64 @@ stages:
     pool:
       vmImage: ubuntu-latest
     steps: 
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'Docker Hub Connection'
+        repository: $(imageRepo)
+        command: 'buildAndPush'
+        Dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
+        tags: |
+          $(tag)
+    - task: PublishBuildArtifacts@1
+      displayName: Publish Kubernetes Manifests
+      inputs:
+        PathtoPublish: '$(Build.SourcesDirectory)/kubernetes'
+        ArtifactName: 'manifests'
+        publishLocation: 'Container'
     - task: AzureKeyVault@2
+      displayName: Unlock Key Vault
       inputs:
         azureSubscription: 'Deployments Service Connection'
         KeyVaultName: 'nmp-pipeline-keys'
         SecretsFilter: '*'
         RunAsPreJob: true
 
-    - script: echo $(PORT)
-    # - task: Docker@2
-    #   inputs:
-    #     containerRegistry: 'Docker Hub Connection'
-    #     repository: $(imageRepo)
-    #     command: 'buildAndPush'
-    #     Dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
-    #     tags: |
-    #       $(tag)
-    # - task: PublishBuildArtifacts@1
-    #   inputs:
-    #     PathtoPublish: '$(Build.SourcesDirectory)/kubernetes'
-    #     ArtifactName: 'manifests'
-    #     publishLocation: 'Container'
-    
-
-# - stage: Deploy
-#   displayName: Deploy to Dev
-#   dependsOn: Build
-#   jobs:
-#     - job: Deploy
-#       displayName: Deploy to AKS
-#       pool: 
-#         vmImage: ubuntu-latest
-#       steps:
-#       - task: DownloadPipelineArtifact@2
-#         inputs:
-#           buildType: 'current'
-#           artifactName: 'manifests'
-#           targetPath: '$(Pipeline.Workspace)/manifests'
-#       - task: KubernetesManifest@0
-#         inputs:
-#           action: 'deploy'
-#           kubernetesServiceConnection: 'staging-nmp-nmp-cluster-default-1679573575997'
-#           namespace: 'default'
-#           manifests: |
-#             $(Pipeline.Workspace)/manifests/deployment.yaml'
-#             $(Pipeline.Workspace)/manifests/service.yaml'
+- stage: Deploy
+  displayName: Deploy to Dev
+  dependsOn: Build
+  jobs:
+    - job: Deploy
+      displayName: Deploy to AKS
+      pool: 
+        vmImage: ubuntu-latest
+      steps:
+      - task: DownloadPipelineArtifact@2
+        inputs:
+          buildType: 'current'
+          artifactName: 'manifests'
+          targetPath: '$(Pipeline.Workspace)/manifests'
+      - script: 
+        env:
+          PORT: $(PORT)
+          CONN_STR: $(DB-STR)
+      
+      - task: KubernetesManifest@0
+        inputs:
+          action: 'createSecret'
+          kubernetesServiceConnection: 'staging-nmp-nmp-cluster-default-1679573575997'
+          namespace: 'default'
+          secretType: 'dockerRegistry'
+          secretName: 'dockerhub-secret'
+          dockerRegistryEndpoint: 'Docker Hub Connection'
+          
+      - task: KubernetesManifest@0
+        inputs:
+          action: 'deploy'
+          kubernetesServiceConnection: 'staging-nmp-nmp-cluster-default-1679573575997'
+          namespace: 'default'
+          manifests: |
+            $(Pipeline.Workspace)/manifests/deployment.yaml'
+            $(Pipeline.Workspace)/manifests/service.yaml'
 
 
 
