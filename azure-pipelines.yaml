@@ -7,6 +7,7 @@ resources:
 variables:
   imageRepo: 'mkivo/node-mongoose-prototype'
   tag: refactor #'$(Build.BuildId)'
+  
 
 stages:
 - stage: Build
@@ -25,12 +26,27 @@ stages:
         Dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
         tags: |
           $(tag)
-    - task: PublishBuildArtifacts@1
+          
+    # - task: PublishBuildArtifacts@1
+    #   displayName: Publish Kubernetes Manifests
+    #   inputs:
+    #     PathtoPublish: '$(Build.SourcesDirectory)/kubernetes'
+    #     ArtifactName: 'manifests'
+    #     publishLocation: 'pipeline'
+
+    - task: PublishPipelineArtifact@1
       inputs:
-        PathtoPublish: '$(Build.SourcesDirectory)/kubernetes'
-        ArtifactName: 'manifests'
-        publishLocation: 'Container'
-    
+        targetPath: '$(Pipeline.Workspace)/s/kubernetes'
+        artifact: 'manifests'
+        publishLocation: 'pipeline'
+
+    - task: AzureKeyVault@2
+      displayName: Unlock Key Vault
+      inputs:
+        azureSubscription: 'Deployments Service Connection'
+        KeyVaultName: 'nmp-pipeline-keys'
+        SecretsFilter: '*'
+        RunAsPreJob: true
 
 - stage: Deploy
   displayName: Deploy to Dev
@@ -46,6 +62,21 @@ stages:
           buildType: 'current'
           artifactName: 'manifests'
           targetPath: '$(Pipeline.Workspace)/manifests'
+      - script: ls -l /home/vsts/work/1/manifests
+
+        # env:
+        #   PORT: $(PORT)
+        #   CONN_STR: $(DB-STR)
+      
+      - task: KubernetesManifest@0
+        inputs:
+          action: 'createSecret'
+          kubernetesServiceConnection: 'staging-nmp-nmp-cluster-default-1679573575997'
+          namespace: 'default'
+          secretType: 'dockerRegistry'
+          secretName: 'dockerhub-secret'
+          dockerRegistryEndpoint: 'Docker Hub Connection'
+          
       - task: KubernetesManifest@0
         inputs:
           action: 'deploy'
