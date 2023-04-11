@@ -32,4 +32,4 @@ spec:
             - name: PORT
               value: "3000"
             - name: CONN_STR
-              value: ${DB-STR}
+              value: $(DB-STR)
