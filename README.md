@@ -1,7 +1,7 @@
 # node-mongoose-prototype
 <img src="assets/images/node-mongoose-prototype-banner.png">
 
-A simple NodeJS CRUD app that can be used to quickly test MongoDB deployments using Mongoose and Express.
+A simple NodeJS CRUD app that can be used to quickly test MongoDB deployments using Mongoose and Express
 
 ## Instructions:
 
